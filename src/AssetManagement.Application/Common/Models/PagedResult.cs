@@ -1,0 +1,14 @@
+namespace AssetManagement.Application.Common.Models;
+
+/// <summary>A single page of results plus the metadata a client needs to request further pages.</summary>
+public sealed record PagedResult<T>(IReadOnlyList<T> Items, int Page, int PageSize, int TotalCount)
+{
+    public int TotalPages => PageSize == 0 ? 0 : (int)Math.Ceiling(TotalCount / (double)PageSize);
+
+    public bool HasPreviousPage => Page > 1;
+
+    public bool HasNextPage => Page < TotalPages;
+
+    public PagedResult<TOut> Map<TOut>(Func<T, TOut> selector) =>
+        new(Items.Select(selector).ToList(), Page, PageSize, TotalCount);
+}
