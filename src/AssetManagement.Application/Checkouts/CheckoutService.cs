@@ -1,4 +1,5 @@
 using AssetManagement.Application.Abstractions.Persistence;
+using AssetManagement.Application.Common;
 using AssetManagement.Application.Common.Exceptions;
 using AssetManagement.Domain.Assets;
 using AssetManagement.Domain.Checkouts;
@@ -43,7 +44,7 @@ public sealed class CheckoutService : ICheckoutService
         var now = UtcNow;
 
         // Business rules (availability, maintenance, loan period) live in the domain model.
-        var checkout = asset.CheckOut(userId, request.DueAtUtc.ToUniversalTime(), now, request.Notes);
+        var checkout = asset.CheckOut(userId, request.DueAtUtc.AsUtc(), now, request.Notes);
         _checkouts.Add(checkout);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
