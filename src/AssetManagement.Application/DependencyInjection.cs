@@ -3,6 +3,7 @@ using AssetManagement.Application.Auth;
 using AssetManagement.Application.Checkouts;
 using AssetManagement.Application.Maintenance;
 using AssetManagement.Application.Users;
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
@@ -19,6 +20,8 @@ public static class DependencyInjection
         services.AddScoped<IMaintenanceService, MaintenanceService>();
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IUserService, UserService>();
+
+        services.AddValidatorsFromAssembly(typeof(DependencyInjection).Assembly, ServiceLifetime.Scoped);
 
         return services;
     }
