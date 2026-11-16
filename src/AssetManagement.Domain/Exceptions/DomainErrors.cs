@@ -9,6 +9,10 @@ public static class DomainErrors
     public static DomainException AssetUnderMaintenance(string serialNumber) =>
         new("asset.under_maintenance", $"Asset '{serialNumber}' is under maintenance and cannot be checked out.");
 
+    public static DomainException MaintenanceInProgress(string serialNumber) =>
+        new("asset.under_maintenance",
+            $"Asset '{serialNumber}' is under maintenance; complete the open maintenance record first.");
+
     public static DomainException AssetRetired(string serialNumber) =>
         new("asset.retired", $"Asset '{serialNumber}' is retired.");
 

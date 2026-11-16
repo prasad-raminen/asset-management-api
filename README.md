@@ -199,6 +199,7 @@ Common error responses: `400` validation, `401` missing, invalid or expired toke
 | An asset overdue for service under its maintenance policy cannot be checked out | `asset.maintenance_overdue` |
 | The loan period cannot exceed the type's maximum: Drone 3 days, Laser scanner 14, Laser tracker 30 | `checkout.duration_exceeded` |
 | Maintenance cannot start while an asset is checked out | `asset.checked_out` |
+| An asset cannot be retired while it is checked out or under maintenance | `asset.checked_out`, `asset.under_maintenance` |
 | Serial numbers and user emails are unique | `asset.duplicate_serial_number`, `user.duplicate_email` |
 
 | Asset type | Maintenance policy |

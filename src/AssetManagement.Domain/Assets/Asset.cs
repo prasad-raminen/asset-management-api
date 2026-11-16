@@ -178,12 +178,18 @@ public abstract class Asset : Entity
         UsesSinceLastService = 0;
     }
 
-    /// <summary>Permanently removes the asset from circulation (soft delete).</summary>
+    /// <summary>
+    /// Permanently removes the asset from circulation (soft delete). An open checkout or maintenance
+    /// record must be closed first, otherwise it could never be completed once the asset is retired.
+    /// </summary>
     public void Retire()
     {
-        if (Status == AssetStatus.CheckedOut)
+        switch (Status)
         {
-            throw DomainErrors.AssetCheckedOut(SerialNumber);
+            case AssetStatus.CheckedOut:
+                throw DomainErrors.AssetCheckedOut(SerialNumber);
+            case AssetStatus.UnderMaintenance:
+                throw DomainErrors.MaintenanceInProgress(SerialNumber);
         }
 
         Status = AssetStatus.Retired;

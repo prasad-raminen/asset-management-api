@@ -100,6 +100,20 @@ public class AssetMaintenanceTests
     }
 
     [Fact]
+    public void Retire_AssetUnderMaintenance_ThrowsAndKeepsRecordCompletable()
+    {
+        var asset = TestData.Scanner();
+        var record = asset.StartMaintenance(MaintenanceType.Corrective, "Laser fault", TechnicianId, Now);
+
+        var act = asset.Retire;
+
+        act.Should().Throw<DomainException>().Which.Code.Should().Be("asset.under_maintenance");
+        asset.Status.Should().Be(AssetStatus.UnderMaintenance);
+        asset.CompleteMaintenance(record, Now.AddHours(2), null, null);
+        record.IsOpen.Should().BeFalse();
+    }
+
+    [Fact]
     public void UpdateDetails_RetiredAsset_Throws()
     {
         var asset = TestData.Scanner();
