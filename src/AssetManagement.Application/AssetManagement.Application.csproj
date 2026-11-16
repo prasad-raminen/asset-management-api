@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>AssetManagement.Application</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AssetManagement.Domain\AssetManagement.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
