@@ -11,7 +11,7 @@ namespace AssetManagement.Api.Controllers;
 
 /// <summary>Account registration, login and the current user's profile.</summary>
 [ApiController]
-[ApiVersion("1.0")]
+[ApiVersion(ApiVersions.V1)]
 [Route("api/v{version:apiVersion}/auth")]
 [Produces("application/json")]
 public sealed class AuthController : ControllerBase
@@ -36,7 +36,7 @@ public sealed class AuthController : ControllerBase
     public async Task<ActionResult<AuthResponse>> Register(RegisterRequest request, CancellationToken cancellationToken)
     {
         var response = await _auth.RegisterAsync(request, cancellationToken);
-        return CreatedAtAction(nameof(Me), new { version = "1.0" }, response);
+        return CreatedAtAction(nameof(Me), new { version = ApiVersions.V1Route }, response);
     }
 
     /// <summary>Exchanges email and password for a JWT bearer token.</summary>

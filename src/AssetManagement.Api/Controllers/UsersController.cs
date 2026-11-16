@@ -8,7 +8,7 @@ namespace AssetManagement.Api.Controllers;
 
 /// <summary>User administration (Admin only).</summary>
 [ApiController]
-[ApiVersion("1.0")]
+[ApiVersion(ApiVersions.V1)]
 [Route("api/v{version:apiVersion}/users")]
 [Authorize(Policy = Policies.CanAdminister)]
 [Produces("application/json")]

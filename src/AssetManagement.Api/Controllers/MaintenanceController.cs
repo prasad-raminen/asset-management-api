@@ -9,7 +9,7 @@ namespace AssetManagement.Api.Controllers;
 
 /// <summary>Maintenance and calibration records for an asset.</summary>
 [ApiController]
-[ApiVersion("1.0")]
+[ApiVersion(ApiVersions.V1)]
 [Route("api/v{version:apiVersion}/assets/{assetId:guid}/maintenance")]
 [Produces("application/json")]
 [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -43,7 +43,7 @@ public sealed class MaintenanceController : ControllerBase
         CancellationToken cancellationToken)
     {
         var record = await _maintenance.StartAsync(assetId, User.GetUserId(), request, cancellationToken);
-        return CreatedAtAction(nameof(History), new { assetId, version = "1.0" }, record);
+        return CreatedAtAction(nameof(History), new { assetId, version = ApiVersions.V1Route }, record);
     }
 
     /// <summary>Completes maintenance and returns the asset to service.</summary>

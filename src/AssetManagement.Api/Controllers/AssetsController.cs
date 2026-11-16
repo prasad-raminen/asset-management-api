@@ -9,7 +9,7 @@ namespace AssetManagement.Api.Controllers;
 
 /// <summary>The equipment register.</summary>
 [ApiController]
-[ApiVersion("1.0")]
+[ApiVersion(ApiVersions.V1)]
 [Route("api/v{version:apiVersion}/assets")]
 [Produces("application/json")]
 [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -51,7 +51,7 @@ public sealed class AssetsController : ControllerBase
     public async Task<ActionResult<AssetDto>> Create(CreateAssetRequest request, CancellationToken cancellationToken)
     {
         var asset = await _assets.CreateAsync(request, cancellationToken);
-        return CreatedAtAction(nameof(GetById), new { id = asset.Id, version = "1.0" }, asset);
+        return CreatedAtAction(nameof(GetById), new { id = asset.Id, version = ApiVersions.V1Route }, asset);
     }
 
     /// <summary>Updates an asset's descriptive details and specifications.</summary>

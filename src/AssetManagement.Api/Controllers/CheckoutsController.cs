@@ -9,7 +9,7 @@ namespace AssetManagement.Api.Controllers;
 
 /// <summary>The checkout / return workflow.</summary>
 [ApiController]
-[ApiVersion("1.0")]
+[ApiVersion(ApiVersions.V1)]
 [Route("api/v{version:apiVersion}")]
 [Produces("application/json")]
 [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -37,7 +37,7 @@ public sealed class CheckoutsController : ControllerBase
         CancellationToken cancellationToken)
     {
         var checkout = await _checkouts.CheckOutAsync(assetId, User.GetUserId(), request, cancellationToken);
-        return CreatedAtAction(nameof(History), new { assetId, version = "1.0" }, checkout);
+        return CreatedAtAction(nameof(History), new { assetId, version = ApiVersions.V1Route }, checkout);
     }
 
     /// <summary>Returns a checked-out asset.</summary>
