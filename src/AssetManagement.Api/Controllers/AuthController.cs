@@ -1,9 +1,11 @@
 using AssetManagement.Api.Extensions;
+using AssetManagement.Api.RateLimiting;
 using AssetManagement.Application.Auth;
 using AssetManagement.Application.Users;
 using Asp.Versioning;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace AssetManagement.Api.Controllers;
 
@@ -26,9 +28,11 @@ public sealed class AuthController : ControllerBase
     /// <summary>Registers a new account. New accounts receive the read-only Viewer role.</summary>
     [HttpPost("register")]
     [AllowAnonymous]
+    [EnableRateLimiting(RateLimitPolicies.Auth)]
     [ProducesResponseType<AuthResponse>(StatusCodes.Status201Created)]
     [ProducesResponseType<ValidationProblemDetails>(StatusCodes.Status400BadRequest)]
     [ProducesResponseType<ProblemDetails>(StatusCodes.Status409Conflict)]
+    [ProducesResponseType<ProblemDetails>(StatusCodes.Status429TooManyRequests)]
     public async Task<ActionResult<AuthResponse>> Register(RegisterRequest request, CancellationToken cancellationToken)
     {
         var response = await _auth.RegisterAsync(request, cancellationToken);
@@ -38,9 +42,11 @@ public sealed class AuthController : ControllerBase
     /// <summary>Exchanges email and password for a JWT bearer token.</summary>
     [HttpPost("login")]
     [AllowAnonymous]
+    [EnableRateLimiting(RateLimitPolicies.Auth)]
     [ProducesResponseType<AuthResponse>(StatusCodes.Status200OK)]
     [ProducesResponseType<ValidationProblemDetails>(StatusCodes.Status400BadRequest)]
     [ProducesResponseType<ProblemDetails>(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType<ProblemDetails>(StatusCodes.Status429TooManyRequests)]
     public async Task<ActionResult<AuthResponse>> Login(LoginRequest request, CancellationToken cancellationToken) =>
         Ok(await _auth.LoginAsync(request, cancellationToken));
 
