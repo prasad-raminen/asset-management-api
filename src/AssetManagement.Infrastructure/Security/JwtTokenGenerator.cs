@@ -10,8 +10,6 @@ namespace AssetManagement.Infrastructure.Security;
 
 internal sealed class JwtTokenGenerator : IJwtTokenGenerator
 {
-    public const string RoleClaim = "role";
-
     private readonly JwtOptions _options;
     private readonly TimeProvider _clock;
     private readonly JsonWebTokenHandler _handler = new();
@@ -44,7 +42,7 @@ internal sealed class JwtTokenGenerator : IJwtTokenGenerator
                 new Claim(JwtRegisteredClaimNames.Email, user.Email),
                 new Claim(JwtRegisteredClaimNames.Name, user.FullName),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(RoleClaim, user.Role.ToString()),
+                new Claim(AppClaimTypes.Role, user.Role.ToString()),
             ]),
         };
 

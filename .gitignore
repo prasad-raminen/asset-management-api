@@ -23,7 +23,7 @@ artifacts/
 publish/
 
 # Local configuration / secrets
-appsettings.Development.json
+# appsettings.Development.json is committed: it only holds dev-only placeholders.
 appsettings.*.local.json
 *.local.json
 secrets.json
