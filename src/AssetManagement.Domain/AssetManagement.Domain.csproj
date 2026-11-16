@@ -4,4 +4,8 @@
     <RootNamespace>AssetManagement.Domain</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="AssetManagement.UnitTests" />
+  </ItemGroup>
+
 </Project>
